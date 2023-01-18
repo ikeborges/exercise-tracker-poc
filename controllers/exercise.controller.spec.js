@@ -33,11 +33,6 @@ describe('ExerciseController', () => {
     const duration = 20;
     const today = new Date().toDateString();
 
-    const expected = {
-      description,
-      duration,
-    };
-
     const received = exerciseController.createExercise(description, duration);
 
     expect(received.date).toStrictEqual(today);

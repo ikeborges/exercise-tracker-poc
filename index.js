@@ -42,13 +42,32 @@ app.post('/api/users/:id/exercises', (req, res) => {
 
   res.status(201).send({
     ...exercise,
-    date: exercise.date.toDateString(),
     username: user.username,
     _id: user._id,
   });
 });
 
-app.get('/api/users/:id/logs', (req, res) => {});
+app.get('/api/users/:id/logs', (req, res) => {
+  const { id: userId } = req.params;
+  const { from, to, limit } = req.query;
+
+  const user = getUserById(userId);
+  let logs = user.logs;
+
+  if (from) {
+    logs = logs.filter((l) => new Date(l.date) >= new Date(from));
+  }
+
+  if (to) {
+    logs = logs.filter((l) => new Date(l.date) <= new Date(to));
+  }
+
+  if (limit) {
+    logs = logs.slice(0, parseInt(limit));
+  }
+
+  res.send({ ...user, count: logs.length, logs });
+});
 
 const listener = app.listen(process.env.PORT || 3000, () => {
   // TODO: Remove this

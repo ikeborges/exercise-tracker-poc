@@ -7,7 +7,7 @@ class ExerciseController {
     return {
       description,
       duration,
-      date: date ? new Date(date).toDateString() : today,
+      date: date ? new Date(date.replace('-', '/')).toDateString() : today,
     };
   };
 }

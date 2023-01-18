@@ -52,21 +52,21 @@ app.get('/api/users/:id/logs', (req, res) => {
   const { from, to, limit } = req.query;
 
   const user = getUserById(userId);
-  let logs = user.logs;
+  let log = user.log;
 
   if (from) {
-    logs = logs.filter((l) => new Date(l.date) >= new Date(from));
+    log = log.filter((l) => new Date(l.date) >= new Date(from));
   }
 
   if (to) {
-    logs = logs.filter((l) => new Date(l.date) <= new Date(to));
+    log = log.filter((l) => new Date(l.date) <= new Date(to));
   }
 
   if (limit) {
-    logs = logs.slice(0, parseInt(limit));
+    log = log.slice(0, parseInt(limit));
   }
 
-  res.send({ ...user, count: logs.length, logs });
+  res.send({ ...user, log });
 });
 
 const listener = app.listen(process.env.PORT || 3000, () => {

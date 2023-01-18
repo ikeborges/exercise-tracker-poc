@@ -23,7 +23,7 @@ class UserController {
       _id: generateUUID(),
       username,
       count: 0,
-      logs: [],
+      log: [],
     };
 
     this.users.push(user);
@@ -33,7 +33,7 @@ class UserController {
 
   addExercise = (userId, exercise) => {
     const userIndex = this.users.findIndex((u) => u._id === userId);
-    this.users[userIndex].logs.push(exercise);
+    this.users[userIndex].log.push(exercise);
     this.users[userIndex].count += 1;
 
     return this.users[userIndex];

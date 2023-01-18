@@ -16,7 +16,7 @@ describe('UserController', () => {
       _id: expect.any(String),
       username: 'ikeborges',
       count: 0,
-      logs: [],
+      log: [],
     });
   });
 
@@ -70,7 +70,7 @@ describe('UserController', () => {
       _id: userId,
       username: user.username,
       count: 1,
-      logs: [
+      log: [
         {
           description: exercise.description,
           duration: exercise.duration,

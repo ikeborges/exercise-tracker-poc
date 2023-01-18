@@ -1,7 +1,7 @@
 class ExerciseController {
   constructor() {}
 
-  createExercise = (description, duration, date) => {
+  createExercise = (description, duration, date = new Date()) => {
     return {
       description,
       duration,

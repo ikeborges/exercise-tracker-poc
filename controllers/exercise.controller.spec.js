@@ -27,4 +27,19 @@ describe('ExerciseController', () => {
 
     expect(received).toStrictEqual(expected);
   });
+
+  it('shoud create an exercise with the current date if none is provided', () => {
+    const description = 'Sample description';
+    const duration = 20;
+    const today = new Date();
+
+    const expected = {
+      description,
+      duration,
+    };
+
+    const received = exerciseController.createExercise(description, duration);
+
+    expect(received.date.toDateString()).toStrictEqual(today.toDateString());
+  });
 });

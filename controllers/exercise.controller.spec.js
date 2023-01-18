@@ -16,7 +16,7 @@ describe('ExerciseController', () => {
     const expected = {
       description,
       duration,
-      date: new Date(date),
+      date: new Date(date).toDateString(),
     };
 
     const received = exerciseController.createExercise(
@@ -31,7 +31,7 @@ describe('ExerciseController', () => {
   it('shoud create an exercise with the current date if none is provided', () => {
     const description = 'Sample description';
     const duration = 20;
-    const today = new Date();
+    const today = new Date().toDateString();
 
     const expected = {
       description,
@@ -40,6 +40,6 @@ describe('ExerciseController', () => {
 
     const received = exerciseController.createExercise(description, duration);
 
-    expect(received.date.toDateString()).toStrictEqual(today.toDateString());
+    expect(received.date).toStrictEqual(today);
   });
 });

@@ -1,11 +1,13 @@
 class ExerciseController {
   constructor() {}
 
-  createExercise = (description, duration, date = new Date()) => {
+  createExercise = (description, duration, date) => {
+    const today = new Date().toDateString();
+
     return {
       description,
       duration,
-      date: new Date(date),
+      date: date ? new Date(date).toDateString() : today,
     };
   };
 }

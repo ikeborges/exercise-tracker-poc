@@ -48,6 +48,8 @@ app.post('/api/users/:id/exercises', (req, res) => {
   });
 });
 
+app.get('/api/users/:id/logs', (req, res) => {});
+
 const listener = app.listen(process.env.PORT || 3000, () => {
   // TODO: Remove this
   createUser('ikeborges');

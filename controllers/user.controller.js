@@ -22,11 +22,21 @@ class UserController {
     const user = {
       _id: generateUUID(),
       username,
+      count: 0,
+      logs: [],
     };
 
     this.users.push(user);
 
     return user;
+  };
+
+  addExercise = (userId, exercise) => {
+    const userIndex = this.users.findIndex((u) => u._id === userId);
+    this.users[userIndex].logs.push(exercise);
+    this.users[userIndex].count += 1;
+
+    return this.users[userIndex];
   };
 }
 

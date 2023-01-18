@@ -2,6 +2,7 @@ const express = require('express');
 const app = express();
 const cors = require('cors');
 const UserController = require('./controllers/user.controller');
+const ExerciseController = require('./controllers/exercise.controller');
 require('dotenv').config();
 
 app.use(cors());
@@ -9,11 +10,12 @@ app.use(cors());
 app.use(express.urlencoded({ extended: true }));
 
 app.use(express.static('public'));
-app.get('/', (req, res) => {
+app.get('/', (_, res) => {
   res.sendFile(__dirname + '/views/index.html');
 });
 
-const { createUser, getUsers } = new UserController();
+const { addExercise, createUser, getUsers, getUserById } = new UserController();
+const { createExercise } = new ExerciseController();
 
 app
   .route('/api/users')
@@ -22,9 +24,29 @@ app
     res.status(201).send(user);
   })
   .get((_, res) => {
-    const users = getUsers();
+    const users = getUsers().map((user) => ({
+      _id: user._id,
+      username: user.username,
+    }));
     res.send(users);
   });
+
+app.post('/api/users/:id/exercises', (req, res) => {
+  const { id: userId } = req.params;
+  const { description, duration, date } = req.body;
+
+  const exercise = createExercise(description, parseInt(duration), date);
+  const user = getUserById(userId);
+
+  addExercise(user._id, exercise);
+
+  res.status(201).send({
+    ...exercise,
+    date: exercise.date.toDateString(),
+    username: user.username,
+    _id: user._id,
+  });
+});
 
 const listener = app.listen(process.env.PORT || 3000, () => {
   // TODO: Remove this

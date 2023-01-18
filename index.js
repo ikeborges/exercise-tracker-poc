@@ -1,17 +1,19 @@
 const express = require('express');
 const app = express();
 const cors = require('cors');
-const { createUser, getUsers, seedUsers } = require('./controllers');
+const UserController = require('./controllers/user.controller');
 require('dotenv').config();
 
 app.use(cors());
-// Parses URL-encoded POST requests as objects and put them in req.body
+// Parses URL-encoded requests as objects available in req.body
 app.use(express.urlencoded({ extended: true }));
 
 app.use(express.static('public'));
 app.get('/', (req, res) => {
   res.sendFile(__dirname + '/views/index.html');
 });
+
+const { createUser, getUsers } = new UserController();
 
 app
   .route('/api/users')
@@ -25,6 +27,9 @@ app
   });
 
 const listener = app.listen(process.env.PORT || 3000, () => {
-  seedUsers();
+  // TODO: Remove this
+  createUser('ikeborges');
+  createUser('carlosmat');
+
   console.log('Your app is listening on port ' + listener.address().port);
 });

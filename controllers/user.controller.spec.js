@@ -33,5 +33,20 @@ describe('UserController', () => {
 
       expect(received).toStrictEqual(expected);
     });
+
+    it('should retrieve an user by id', () => {
+      const dummyUser = userController.createUser('Dummy user');
+      const expected = userController.createUser('Target user');
+
+      const user = userController.getUserById(expected._id);
+
+      expect(user).toStrictEqual(user);
+    });
+
+    it('should throw if retrieving an inexistent user by id', () => {
+      expect(() => {
+        userController.getUserById('Inexistent ID');
+      }).toThrow('User not found');
+    });
   });
 });

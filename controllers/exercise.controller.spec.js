@@ -11,7 +11,7 @@ describe('ExerciseController', () => {
   it('should create an exercise with `description`, `duration` and `date` (parsed)', () => {
     const description = 'Sample description';
     const duration = 20;
-    const date = '2023-04-03';
+    const date = '2023/04/03';
 
     const expected = {
       description,
